@@ -143,7 +143,7 @@ pipeline {
                 // }
 
             }
-
+        stage("istio"){
             steps("istio deployment"){
                 dir("resource-manifests/istio"){
                     script {
@@ -151,6 +151,8 @@ pipeline {
                     }
                 }
             }
+        }
+            
         }
     }
 }
