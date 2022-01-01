@@ -131,15 +131,24 @@ pipeline {
                             kubernetesDeploy(configs: "service-sa-web-app.yaml", kubeconfigId: "mykubernetesconfig")
                         }
                     }
-                dir("resource-manifests/istio"){
-                    // script {
-                    //         kubernetesDeploy(configs: "http-gateway.yaml", kubeconfigId: "mykubernetesconfig")
-                    //     }
+                // dir("resource-manifests/istio"){
+                //     // script {
+                //     //         kubernetesDeploy(configs: "http-gateway.yaml", kubeconfigId: "mykubernetesconfig")
+                //     //     }
                         
-                    // script {
-                    //         kubernetesDeploy(configs: "sa-virtualservice-external.yaml", kubeconfigId: "mykubernetesconfig")
-                    //     }
-                    sh 'kubectl apply -f http-gateway.yaml'
+                //     // script {
+                //     //         kubernetesDeploy(configs: "sa-virtualservice-external.yaml", kubeconfigId: "mykubernetesconfig")
+                //     //     }
+
+                // }
+
+            }
+
+            steps("istio deployment"){
+                dir("resource-manifests/istio"){
+                    script {
+                        kubernetesDeploy(configs: "http-gateway.yaml", kubeconfigId: "mykubernetesconfig")
+                    }
                 }
             }
         }
