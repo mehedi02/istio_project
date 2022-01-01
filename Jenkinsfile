@@ -82,32 +82,32 @@ pipeline {
             }
         }
 
-        stage("Build Docker Images"){
-            steps{
-                dir('sa-frontend') {
-                    sh "docker image build -t mehedi02/frontend:istio ."
-                }
+        // stage("Build Docker Images"){
+        //     steps{
+        //         dir('sa-frontend') {
+        //             sh "docker image build -t mehedi02/frontend:istio ."
+        //         }
 
-                dir('sa-logic') {
-                    sh "docker image build -t mehedi02/logic:istio ."
-                }
+        //         dir('sa-logic') {
+        //             sh "docker image build -t mehedi02/logic:istio ."
+        //         }
 
-                dir('sa-webapp') {
-                    sh "docker image build -t mehedi02/webapp:istio ."
-                }
-            }
-        }
+        //         dir('sa-webapp') {
+        //             sh "docker image build -t mehedi02/webapp:istio ."
+        //         }
+        //     }
+        // }
 
-        stage("Push docker images to dockerhub"){
-            steps {
-                withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHub')]) {
-                    sh "docker login -u mehedi02 -p ${dockerHub}"
-                }
-                sh "docker push mehedi02/frontend:istio"
-                sh "docker push mehedi02/webapp:istio"
-                sh "docker push mehedi02/logic:istio"
-            }
-        }
+        // stage("Push docker images to dockerhub"){
+        //     steps {
+        //         withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHub')]) {
+        //             sh "docker login -u mehedi02 -p ${dockerHub}"
+        //         }
+        //         sh "docker push mehedi02/frontend:istio"
+        //         sh "docker push mehedi02/webapp:istio"
+        //         sh "docker push mehedi02/logic:istio"
+        //     }
+        // }
 
         stage ("Deploy App"){
             steps {
@@ -132,13 +132,14 @@ pipeline {
                         }
                     }
                 dir("resource-manifests/istio"){
-                    script {
-                            kubernetesDeploy(configs: "http-gateway.yaml", kubeconfigId: "mykubernetesconfig")
-                        }
+                    // script {
+                    //         kubernetesDeploy(configs: "http-gateway.yaml", kubeconfigId: "mykubernetesconfig")
+                    //     }
                         
-                    script {
-                            kubernetesDeploy(configs: "sa-virtualservice-external.yaml", kubeconfigId: "mykubernetesconfig")
-                        }
+                    // script {
+                    //         kubernetesDeploy(configs: "sa-virtualservice-external.yaml", kubeconfigId: "mykubernetesconfig")
+                    //     }
+                    sh "kubectl apply -f ."
                 }
             }
         }
