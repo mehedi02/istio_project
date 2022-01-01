@@ -139,9 +139,7 @@ pipeline {
                     // script {
                     //         kubernetesDeploy(configs: "sa-virtualservice-external.yaml", kubeconfigId: "mykubernetesconfig")
                     //     }
-                    sh '''#!/bin/bash
-                            kubectl apply -f .
-                        '''
+                    sh 'kubectl apply -f http-gateway.yaml'
                 }
             }
         }
