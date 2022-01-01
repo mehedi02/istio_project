@@ -1,0 +1,34 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: sa-external-services
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - http-gateway
+  http:
+  - match:
+    - uri:
+        exact: /
+    - uri:
+        prefix: /callback
+    - uri:
+        exact: /logout
+    - uri:
+        prefix: /static
+    - uri:
+        regex: '^.*\.(ico|png|jpg)$'
+    route:
+    - destination:
+        host: sa-frontend
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: /sentiment
+    route:
+    - destination:
+        host: sa-web-app
+        port:
+          number: 80
