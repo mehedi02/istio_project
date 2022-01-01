@@ -85,15 +85,15 @@ pipeline {
         stage("Build Docker Images"){
             steps{
                 dir('sa-frontend') {
-                    sh "docker image build -t mehedi02/frontend:istio . -f build/Dockerfile"
+                    sh "docker image build -t mehedi02/frontend:istio ."
                 }
 
                 dir('sa-logic') {
-                    sh "docker image build -t mehedi02/logic:istio . -f build/Dockerfile"
+                    sh "docker image build -t mehedi02/logic:istio ."
                 }
 
                 dir('sa-webapp') {
-                    sh "docker image build -t mehedi02/webapp:istio . -f build/Dockerfile"
+                    sh "docker image build -t mehedi02/webapp:istio ."
                 }
             }
         }
