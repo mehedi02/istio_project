@@ -143,8 +143,10 @@ pipeline {
                 // }
 
             }
+        }
+        
         stage("istio"){
-            steps("istio deployment"){
+            steps{
                 dir("resource-manifests/istio"){
                     script {
                         kubernetesDeploy(configs: "http-gateway.yaml", kubeconfigId: "mykubernetesconfig")
@@ -153,6 +155,6 @@ pipeline {
             }
         }
             
-        }
+        
     }
 }
